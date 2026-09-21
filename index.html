@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aditya Kumar | 3D Personal Portfolio | 3rd Year B.Tech CSE</title>
+  <meta name="description"
+    content="Interactive 3D developer portfolio of Aditya Kumar, 3rd-year B.Tech Computer Science & Engineering student at Vivekananda Global University. Explore software development, web engineering, AI, and ServiceNow projects.">
+  <meta name="keywords"
+    content="Aditya Kumar, Vivekananda Global University, VGU, B.Tech CSE, 3D Portfolio, Three.js, Web Development, WeatherGPT, Face Attendance, Python, Java, ServiceNow, Software Engineer">
+  <meta name="author" content="Aditya Kumar">
+
+  <!-- Open Graph / Meta Tags -->
+  <meta property="og:title" content="Aditya Kumar | Interactive 3D Developer Portfolio">
+  <meta property="og:description"
+    content="Explore B.Tech CSE projects, 3D interactive laptop, technical skills, certifications, and academic journey at Vivekananda Global University.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Three.js 3D Background Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Ambient Vignette & Cyber Scanlines -->
+  <div class="cyber-overlay"></div>
+  <div class="scanlines"></div>
+
+  <!-- Content Layer -->
+  <div class="content-wrapper">
+
+    <!-- ==========================================================================
+         NAVIGATION HUD
+         ========================================================================== -->
+    <header class="cyber-nav" id="cyber-nav">
+      <div class="cyber-nav-container">
+        <a href="#hero" class="nav-brand" id="nav-brand-link">
+          <div class="brand-icon">
+            <img src="assets/images/aditya-profile.jpg" alt="Aditya Kumar" class="brand-avatar-img">
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">ADITYA.KUMAR</span>
+            <span class="brand-tag">&lt;B.TECH_CSE_VGU/&gt;</span>
+          </div>
+        </a>
+
+        <nav>
+          <ul class="nav-menu" id="nav-menu">
+            <li><a href="#hero" class="nav-link active">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#education" class="nav-link">Education</a></li>
+            <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#certifications" class="nav-link">Certifications</a></li>
+            <li><a href="#journey" class="nav-link">Journey</a></li>
+            <li><a href="#academic" class="nav-link">Academic Deck</a></li>
+            <li><a href="#achievements" class="nav-link">Achievements</a></li>
+            <li><a href="#resume" class="nav-link">Resume</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-actions">
+          <!-- Web Audio API Synthesizer Sound Toggle -->
+          <button id="audio-toggle" class="audio-btn" aria-label="Toggle Cyber Sound Effects"
+            title="Sound Muted (Click to enable)">
+            <i class="fa-solid fa-volume-xmark"></i>
+          </button>
+
+          <a href="#contact" class="hud-pill-btn" id="nav-contact-btn">
+            <span>Contact Me</span>
+            <i class="fa-solid fa-paper-plane"></i>
+          </a>
+
+          <button id="mobile-menu-btn" class="mobile-toggle" aria-label="Toggle Mobile Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ==========================================================================
+           1. HOMEPAGE / HERO SECTION
+           ========================================================================== -->
+      <section id="hero" class="hero-section">
+        <div class="container">
+          <div class="hero-grid">
+
+            <!-- Left Hero Content -->
+            <div class="hero-content">
+              <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>3RD YEAR B.TECH CSE • VIVEKANANDA GLOBAL UNIVERSITY</span>
+              </div>
+
+              <div class="hero-title-wrap">
+                <div class="hero-subtitle-meta">
+                  <i class="fa-solid fa-terminal"></i>
+                  <span>PORTFOLIO_SYSTEM // VGU.CSE.2028</span>
+                </div>
+                <h1 class="hero-name" id="hero-name" data-text="ADITYA KUMAR">ADITYA KUMAR</h1>
+              </div>
+
+              <!-- Main Requested Subtitle -->
+              <div class="hero-role-badge">
+                <i class="fa-solid fa-laptop-code"></i>
+                <span class="role-text">B.Tech CSE Student | Developer | Tech Enthusiast</span>
+              </div>
+
+              <!-- Dynamic Typing Animation -->
+              <div class="typing-wrap">
+                Passionate about <span id="typing-text" class="typing-text"></span>
+              </div>
+
+              <p class="hero-bio">
+                I am a 3rd-year Computer Science and Engineering student at Vivekananda Global University interested in
+                software development, web development, programming, AI, and emerging technologies. Dedicated to
+                engineering scalable systems, innovative AI applications, and immersive 3D web experiences.
+              </p>
+
+              <div class="hero-ctas">
+                <a href="#about" class="btn-primary" id="hero-explore-cta">
+                  <span>Explore My Portfolio</span>
+                  <i class="fa-solid fa-compass"></i>
+                </a>
+                <a href="#projects" class="btn-secondary" id="hero-projects-cta">
+                  <span>View Projects</span>
+                  <i class="fa-solid fa-rocket"></i>
+                </a>
+                <a href="#resume" class="btn-secondary btn-resume-cta" id="hero-resume-cta">
+                  <span>Download Resume</span>
+                  <i class="fa-solid fa-file-arrow-down"></i>
+                </a>
+                <a href="#contact" class="btn-secondary" id="hero-contact-cta">
+                  <span>Contact Me</span>
+                  <i class="fa-solid fa-paper-plane"></i>
+                </a>
+              </div>
+
+              <!-- Quick Academic Stats Row -->
+              <div class="hero-stats-row" id="hero-stats-container">
+                <!-- Injected dynamically from data.js -->
+              </div>
+            </div>
+
+            <!-- Right Hero Visuals: Cut-Out Profile & 3D Interactive Laptop -->
+            <div class="hero-visual">
+
+              <!-- Profile Cutout Frame with Glowing Animated Effects -->
+              <div class="avatar-wrapper">
+                <!-- Concentric Rotating Holographic Rings -->
+                <div class="holo-ring holo-ring-1"></div>
+                <div class="holo-ring holo-ring-2"></div>
+                <div class="holo-ring holo-ring-3"></div>
+
+                <!-- Radial Pulsing Neon Backglow Backdrop -->
+                <div class="avatar-glow-backdrop"></div>
+
+                <!-- Cut-Out Photo Frame with 3D Tilt -->
+                <div class="cutout-container" id="hero-avatar-frame">
+                  <img src="assets/images/aditya-profile.jpg" alt="Aditya Kumar - 3rd Year B.Tech CSE Student Portrait"
+                    class="cutout-image" id="hero-avatar-img">
+                  <!-- Holographic Laser Scanner Bar -->
+                  <div class="laser-scanner"></div>
+                </div>
+
+                <!-- Floating Cyber HUD Badges around the Cut-Out -->
+                <div class="hud-badge badge-top-right">
+                  <i class="fa-solid fa-graduation-cap hud-badge-icon"></i>
+                  <div class="hud-badge-text">
+                    <span class="hud-badge-title">VGU CSE '26</span>
+                    <span class="hud-badge-sub">3rd Year Undergraduate</span>
+                  </div>
+                </div>
+
+                <div class="hud-badge badge-bottom-left">
+                  <i class="fa-solid fa-microchip hud-badge-icon"></i>
+                  <div class="hud-badge-text">
+                    <span class="hud-badge-title">8.9 CGPA</span>
+                    <span class="hud-badge-sub">Full Stack & AI Dev</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive 3D Laptop / Workstation Container -->
+              <div class="interactive-laptop-card reveal">
+                <div class="laptop-card-header">
+                  <div class="card-status-dot"></div>
+                  <span class="card-header-title">INTERACTIVE 3D WORKSTATION</span>
+                  <span class="card-header-hint"><i class="fa-solid fa-arrows-spin"></i> Drag to Rotate</span>
+                </div>
+                <div class="laptop-canvas-wrapper" id="laptop-canvas-container">
+                  <canvas id="hero-laptop-canvas"></canvas>
+                </div>
+                <div class="laptop-controls">
+                  <button class="laptop-mode-pill" id="screen-mode-btn" title="Click to cycle screen modes">
+                    <i class="fa-solid fa-display"></i> Mode: <span id="screen-mode-name">Code Stream</span>
+                  </button>
+                  <span class="laptop-footer-text">3D WebGL Workstation • Three.js</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           2. ABOUT ME SECTION
+           ========================================================================== -->
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-user-astronaut"></i> Discover Who I Am
+            </span>
+            <h2 class="section-title">About Me</h2>
+            <p class="section-desc">
+              Get to know my technical foundations, university education at Vivekananda Global University, and passion
+              for software engineering, web development, AI, and emerging technologies.
+            </p>
+          </div>
+
+          <div class="about-grid">
+            <!-- Left About Story Card -->
+            <div class="about-story-card reveal">
+              <div class="about-story-header">
+                <div class="story-avatar">
+                  <img src="assets/images/aditya-profile.jpg" alt="Aditya Kumar">
+                </div>
+                <div>
+                  <h3 class="story-name">Aditya Kumar</h3>
+                  <span class="story-subtitle">3rd Year B.Tech CSE • Vivekananda Global University</span>
+                </div>
+              </div>
+
+              <div class="about-paragraphs" id="about-paragraphs-container">
+                <!-- Dynamically populated or rendered -->
+                <p>
+                  I am a passionate 3rd-year Computer Science and Engineering student at <strong>Vivekananda Global
+                    University</strong>, deeply driven by the art and science of software development, modern web
+                  engineering, programming, and artificial intelligence.
+                </p>
+                <p>
+                  My engineering journey is founded upon core computational fundamentals—mastering Data Structures &
+                  Algorithms, Object-Oriented Programming (Java & C++), Relational DBMS, and Operating Systems. I apply
+                  these principles to construct real-world systems, ranging from conversational AI like WeatherGPT to
+                  computer vision biometric attendance and decentralized blockchain traceability.
+                </p>
+                <p>
+                  In addition to academic curriculum, I continually expand my horizons through official certifications
+                  including the <em>Google Crash Course on Python</em>, <em>ServiceNow Administration Fundamentals</em>,
+                  and hands-on full-stack development. I am excited to collaborate on forward-thinking projects and
+                  internship opportunities.
+                </p>
+              </div>
+
+              <div class="interest-tags">
+                <span class="interest-tag"><i class="fa-solid fa-laptop-code"></i> Software Development</span>
+                <span class="interest-tag"><i class="fa-solid fa-globe"></i> Web Development</span>
+                <span class="interest-tag"><i class="fa-solid fa-code"></i> Programming (C/C++/Java/Python)</span>
+                <span class="interest-tag"><i class="fa-solid fa-brain"></i> Artificial Intelligence</span>
+                <span class="interest-tag"><i class="fa-solid fa-cubes"></i> Emerging Technologies</span>
+                <span class="interest-tag"><i class="fa-solid fa-cloud"></i> ServiceNow Cloud</span>
+              </div>
+            </div>
+
+            <!-- Right Highlights / Focus Deck -->
+            <div class="about-focus-cards" id="about-highlights-container">
+              <!-- Dynamically populated from data.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           3. EDUCATION TIMELINE
+           ========================================================================== -->
+      <section id="education" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-graduation-cap"></i> Academic Pathway
+            </span>
+            <h2 class="section-title">Education Milestones</h2>
+            <p class="section-desc">
+              An interactive milestone timeline showcasing my academic journey from foundational schooling to my current
+              3rd year in B.Tech Computer Science & Engineering at Vivekananda Global University.
+            </p>
+          </div>
+
+          <div class="timeline-wrap">
+            <div class="timeline-line"></div>
+            <div id="timeline-container">
+              <!-- Injected dynamically from data.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           4. TECHNICAL SKILLS (3D INTERACTIVE CARDS)
+           ========================================================================== -->
+      <section id="skills" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-microchip"></i> Core Competencies
+            </span>
+            <h2 class="section-title">Technical Skills Matrix</h2>
+            <p class="section-desc">
+              Hover over each skill card to experience real-time 3D perspective tilt and neon glow effects. Includes all
+              13 primary technical domains requested.
+            </p>
+          </div>
+
+          <!-- Filter Tabs -->
+          <div class="filter-tabs reveal" id="skills-filter-tabs">
+            <button class="filter-tab active" data-skill-filter="all">All Skills (13)</button>
+            <button class="filter-tab" data-skill-filter="languages">Programming Languages</button>
+            <button class="filter-tab" data-skill-filter="web">Web Development</button>
+            <button class="filter-tab" data-skill-filter="data">Database & SQL</button>
+            <button class="filter-tab" data-skill-filter="core">Core CS / DSA</button>
+            <button class="filter-tab" data-skill-filter="enterprise">ServiceNow & Cloud</button>
+            <button class="filter-tab" data-skill-filter="tools">Git & Tools</button>
+          </div>
+
+          <div class="skills-3d-grid" id="skills-grid">
+            <!-- Injected dynamically from data.js with 3D tilt physics -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           5. PROJECTS SHOWCASE (3D INTERACTIVE CARDS)
+           ========================================================================== -->
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-rocket"></i> Engineered Innovations
+            </span>
+            <h2 class="section-title">Featured Projects Showcase</h2>
+            <p class="section-desc">
+              Interactive 3D project cards showcasing conversational AI, computer vision, marketplace platforms,
+              blockchain traceability, and creative WebGL web engineering.
+            </p>
+          </div>
+
+          <!-- 3D Projects Cards Grid -->
+          <div class="projects-grid" id="projects-grid">
+            <!-- Injected dynamically from data.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           6. CERTIFICATIONS SECTION
+           ========================================================================== -->
+      <section id="certifications" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-award"></i> Verified Credentials
+            </span>
+            <h2 class="section-title">Certifications & Badges</h2>
+            <p class="section-desc">
+              Industry-recognized credentials from Coursera, ServiceNow, and Google demonstrating verified expertise in
+              Python programming, cloud administration, and web engineering.
+            </p>
+          </div>
+
+          <div class="certs-grid" id="certs-grid">
+            <!-- Injected dynamically from data.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           7. EXPERIENCE / LEARNING JOURNEY
+           ========================================================================== -->
+      <section id="journey" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-route"></i> Growth Roadmap
+            </span>
+            <h2 class="section-title">Technical Learning Journey</h2>
+            <p class="section-desc">
+              A progressive milestone roadmap documenting how my passion for technology expanded across programming,
+              web development, data structures, DBMS, ServiceNow, AI/ML, and deployed projects.
+            </p>
+          </div>
+
+          <div class="journey-roadmap" id="journey-roadmap-container">
+            <!-- Injected dynamically from data.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           8. SUBJECTS / ACADEMIC DECK ("MY ACADEMIC JOURNEY")
+           ========================================================================== -->
+      <section id="academic" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-book-bookmark"></i> Academic Curriculum
+            </span>
+            <h2 class="section-title">My Academic Journey</h2>
+            <p class="section-desc">
+              An interactive presentation deck featuring core computer science subjects completed during my B.Tech CSE
+              journey at Vivekananda Global University.
+            </p>
+          </div>
+
+          <!-- Deck Category Tabs -->
+          <div class="filter-tabs reveal" id="academic-filter-tabs">
+            <button class="filter-tab active" data-academic-filter="all">All Subjects (9)</button>
+            <button class="filter-tab" data-academic-filter="core">Algorithms & Programming</button>
+            <button class="filter-tab" data-academic-filter="systems">Systems & Hardware</button>
+            <button class="filter-tab" data-academic-filter="data">Data & DBMS</button>
+            <button class="filter-tab" data-academic-filter="ai">AI & Machine Learning</button>
+          </div>
+
+          <!-- Interactive Academic Deck Grid -->
+          <div class="academic-deck-grid" id="academic-deck-grid">
+            <!-- Injected dynamically from data.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           9. ACHIEVEMENTS SECTION
+           ========================================================================== -->
+      <section id="achievements" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-trophy"></i> Key Accomplishments
+            </span>
+            <h2 class="section-title">Achievements & Honors</h2>
+            <p class="section-desc">
+              Celebrating milestones across verified certifications, university academic performance, innovation
+              hackathons, and deployed practical solutions.
+            </p>
+          </div>
+
+          <div class="achievements-grid" id="achievements-grid">
+            <!-- Injected dynamically from data.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           10. RESUME SECTION (MODERN 3D RESUME PREVIEW & DOWNLOAD)
+           ========================================================================== -->
+      <section id="resume" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-file-lines"></i> Curriculum Vitae
+            </span>
+            <h2 class="section-title">Resume & Professional Profile</h2>
+            <p class="section-desc">
+              Review my verified qualifications, B.Tech CSE coursework at Vivekananda Global University, project
+              highlights, and download a digital copy of my resume.
+            </p>
+          </div>
+
+          <div class="resume-wrapper reveal">
+            <!-- 3D Resume Card -->
+            <div class="resume-3d-card" id="resume-card">
+              <div class="resume-top-bar">
+                <div class="resume-meta-badge">
+                  <i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>
+                  <span>VERIFIED PROFILE • ADITYA KUMAR</span>
+                </div>
+                <div class="resume-actions-top">
+                  <button class="btn-resume-download" id="download-resume-btn-top">
+                    <i class="fa-solid fa-download"></i> Download Resume
+                  </button>
+                </div>
+              </div>
+
+              <!-- Resume Paper Preview -->
+              <div class="resume-paper">
+                <div class="resume-paper-header">
+                  <div>
+                    <h1 class="resume-name">ADITYA KUMAR</h1>
+                    <p class="resume-headline">B.Tech in Computer Science and Engineering | V.G.U Jaipur (2024–2028)</p>
+                    <p class="resume-uni"><i class="fa-solid fa-location-dot"></i> Permanent: Police Line Siwan, Dist.- Siwan 841226 (Bihar) | College: V.G.U Jaipur</p>
+                  </div>
+                  <div class="resume-contact-block">
+                    <span><i class="fa-solid fa-phone"></i> +91-8210784991</span>
+                    <span><i class="fa-solid fa-envelope"></i> aditya.rr334@gmail.com</span>
+                    <span><i class="fa-brands fa-linkedin"></i> linkedin.com/in/aditya-kumar</span>
+                  </div>
+                </div>
+
+                <hr class="resume-divider">
+
+                <div class="resume-body-grid">
+                  <!-- Left Col -->
+                  <div class="resume-col">
+                    <div class="resume-section-item">
+                      <h4 class="resume-sec-title"><i class="fa-solid fa-bullseye"></i> Career Objective</h4>
+                      <p class="resume-text">
+                        A dedicated and hardworking B.Tech. CSE student looking for an opportunity to start my professional career in the IT industry, where I can learn new technologies, contribute effectively to team goals, and continuously improve my technical and interpersonal skills.
+                      </p>
+                    </div>
+
+                    <div class="resume-section-item">
+                      <h4 class="resume-sec-title"><i class="fa-solid fa-graduation-cap"></i> Educational Qualification</h4>
+                      
+                      <!-- Graduation -->
+                      <div class="resume-edu-item">
+                        <div class="resume-edu-head">
+                          <strong>Graduation (B.Tech CSE)</strong>
+                          <span class="resume-period">2024 – 2028</span>
+                        </div>
+                        <div class="resume-edu-sub">V.G.U Jaipur • <strong>Division: Pursuing</strong></div>
+                      </div>
+
+                      <!-- Intermediate -->
+                      <div class="resume-edu-item">
+                        <div class="resume-edu-head">
+                          <strong>Intermediate</strong>
+                          <span class="resume-period">2023</span>
+                        </div>
+                        <div class="resume-edu-sub">B.S.E.B Patna • <strong>Division: 1st Div.</strong></div>
+                      </div>
+
+                      <!-- Metric -->
+                      <div class="resume-edu-item">
+                        <div class="resume-edu-head">
+                          <strong>Metric (10th Board)</strong>
+                          <span class="resume-period">2019</span>
+                        </div>
+                        <div class="resume-edu-sub">B.S.E.B Patna • <strong>Division: 2nd Div.</strong></div>
+                      </div>
+                    </div>
+
+                    <div class="resume-section-item">
+                      <h4 class="resume-sec-title"><i class="fa-solid fa-id-card"></i> Personal Information</h4>
+                      <p class="resume-text">
+                        <strong>Date of Birth:</strong> 25.10.2004<br>
+                        <strong>Nationality:</strong> Indian<br>
+                        <strong>Languages Known:</strong> Hindi & English<br>
+                        <strong>Hobbies:</strong> Playing Cricket & Listening Music<br>
+                        <strong>Permanent Address:</strong> Police Line Siwan, Dist.- Siwan 841226 (Bihar)
+                      </p>
+                    </div>
+
+                    <div class="resume-section-item">
+                      <h4 class="resume-sec-title"><i class="fa-solid fa-award"></i> Certifications</h4>
+                      <ul class="resume-list">
+                        <li><strong>Crash Course on Python</strong> – Google / Coursera</li>
+                        <li><strong>ServiceNow Administration Fundamentals On Demand</strong> – ServiceNow</li>
+                        <li><strong>ServiceNow Micro-Certification: Welcome to ServiceNow</strong></li>
+                        <li><strong>Modern Web Development Foundations</strong></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Right Col -->
+                  <div class="resume-col">
+                    <div class="resume-section-item">
+                      <h4 class="resume-sec-title"><i class="fa-solid fa-code"></i> Technical Skills</h4>
+                      <p class="resume-text">
+                        <strong>Languages:</strong> C, C++, Java, Python, JavaScript, SQL<br>
+                        <strong>Web Dev:</strong> HTML5, CSS3, ES6+, Responsive Design, Three.js 3D<br>
+                        <strong>Core CS:</strong> Data Structures & Algorithms, DBMS, Operating Systems, Computer
+                        Networks<br>
+                        <strong>Enterprise & Tools:</strong> ServiceNow Administration, Git & Version Control, OpenCV, REST APIs
+                      </p>
+                    </div>
+
+                    <div class="resume-section-item">
+                      <h4 class="resume-sec-title"><i class="fa-solid fa-diagram-project"></i> Key Projects</h4>
+                      <div class="resume-proj-item">
+                        <strong>WeatherGPT</strong>
+                        <p class="resume-text">Conversational AI for weather forecasting, climate warnings, and natural
+                          language meteorological alerts using LLMs & real-time APIs.</p>
+                      </div>
+                      <div class="resume-proj-item">
+                        <strong>Face Recognition Attendance System</strong>
+                        <p class="resume-text">Automated biometric attendance using OpenCV and deep neural facial
+                          embeddings with real-time database logging.</p>
+                      </div>
+                      <div class="resume-proj-item">
+                        <strong>Event-Based Part-Time Opportunities Platform</strong>
+                        <p class="resume-text">Full-stack campus marketplace connecting students with freelance and
+                          event
+                          opportunities with verification and instant matching.</p>
+                      </div>
+                      <div class="resume-proj-item">
+                        <strong>Blockchain Pharma Waste Traceability</strong>
+                        <p class="resume-text">Decentralized smart contract audit network ensuring hazardous medical
+                          waste compliance and disposal tracking.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Bottom Action Banner -->
+              <div class="resume-bottom-bar">
+                <span>Looking for software engineering or web development internships?</span>
+                <button class="btn-primary" id="download-resume-btn-bottom">
+                  <span>Download Full Resume (PDF/Print)</span>
+                  <i class="fa-solid fa-download"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           11. INTERACTIVE CYBER TERMINAL HUD
+           ========================================================================== -->
+      <section id="terminal" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-terminal"></i> Command Line Interface
+            </span>
+            <h2 class="section-title">Interactive Terminal HUD</h2>
+            <p class="section-desc">
+              Execute live commands or click the chips below to query Aditya's academic records, technical stack,
+              projects, or trigger a cyber matrix stream.
+            </p>
+          </div>
+
+          <div class="terminal-wrapper reveal">
+            <div class="terminal-header-bar">
+              <div class="terminal-dots">
+                <span class="term-dot term-dot-red"></span>
+                <span class="term-dot term-dot-yellow"></span>
+                <span class="term-dot term-dot-green"></span>
+              </div>
+              <div class="terminal-title">guest@aditya-kumar: ~ (bash / zsh v5.9)</div>
+              <div><i class="fa-solid fa-wifi" style="color: var(--neon-emerald); font-size: 0.8rem;"></i></div>
+            </div>
+
+            <!-- Quick click chips -->
+            <div class="terminal-chips">
+              <button class="terminal-chip" data-cmd="help">help</button>
+              <button class="terminal-chip" data-cmd="whoami">whoami</button>
+              <button class="terminal-chip" data-cmd="subjects">subjects</button>
+              <button class="terminal-chip" data-cmd="projects">projects</button>
+              <button class="terminal-chip" data-cmd="skills">skills</button>
+              <button class="terminal-chip" data-cmd="certs">certs</button>
+              <button class="terminal-chip" data-cmd="journey">journey</button>
+              <button class="terminal-chip" data-cmd="matrix">matrix</button>
+              <button class="terminal-chip" data-cmd="clear">clear</button>
+            </div>
+
+            <div class="terminal-body" id="terminal-body">
+              <div class="terminal-welcome">
+                * Aditya Kumar Cyber Terminal [Version 3.0 // VGU-CSE-2026]<br>
+                * Type '<span class="cmd-cyan">help</span>' or click chips above to query records.<br>
+                * Connected to Vivekananda Global University Node.
+              </div>
+              <div id="terminal-output"></div>
+
+              <div class="terminal-input-row">
+                <span class="terminal-prompt">guest@aditya-kumar:~$</span>
+                <input type="text" id="terminal-input" class="terminal-input"
+                  placeholder="Type a command (e.g. whoami, projects, skills)..." autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           12. CONTACT & TRANSMISSION
+           ========================================================================== -->
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-tag">
+              <i class="fa-solid fa-satellite-dish"></i> Connect With Me
+            </span>
+            <h2 class="section-title">Initialize Transmission</h2>
+            <p class="section-desc">
+              Interested in collaborating, discussing software engineering projects, or offering an internship
+              opportunity? Send me a message or connect through my social channels.
+            </p>
+          </div>
+
+          <div class="contact-grid">
+            <!-- Form Card -->
+            <div class="contact-card reveal">
+              <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                  <label for="contact-name" class="form-label">Your Name</label>
+                  <input type="text" id="contact-name" class="form-input" placeholder="e.g. Alex Morgan" required>
+                </div>
+                <div class="form-group">
+                  <label for="contact-email" class="form-label">Email Coordinates</label>
+                  <input type="email" id="contact-email" class="form-input" placeholder="e.g. alex@company.com"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label for="contact-subject" class="form-label">Subject / Purpose</label>
+                  <input type="text" id="contact-subject" class="form-input"
+                    placeholder="e.g. Internship Opportunity / Collaboration" required>
+                </div>
+                <div class="form-group">
+                  <label for="contact-message" class="form-label">Message</label>
+                  <textarea id="contact-message" class="form-textarea"
+                    placeholder="Hi Aditya, I came across your portfolio and wanted to discuss..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                  <span>Transmit Signal</span>
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </form>
+            </div>
+
+            <!-- Direct Channels Card -->
+            <div class="contact-card reveal reveal-delay-2">
+              <div class="direct-channels">
+                <a href="tel:+918210784991" class="channel-item">
+                  <div class="channel-icon"><i class="fa-solid fa-phone"></i></div>
+                  <div class="channel-info">
+                    <h4>Direct Mobile</h4>
+                    <p>+91-8210784991</p>
+                  </div>
+                </a>
+
+                <a href="mailto:aditya.rr334@gmail.com" class="channel-item">
+                  <div class="channel-icon"><i class="fa-solid fa-envelope"></i></div>
+                  <div class="channel-info">
+                    <h4>Direct Email</h4>
+                    <p>aditya.rr334@gmail.com</p>
+                  </div>
+                </a>
+
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="channel-item">
+                  <div class="channel-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+                  <div class="channel-info">
+                    <h4>LinkedIn Network</h4>
+                    <p>linkedin.com/in/aditya-kumar</p>
+                  </div>
+                </a>
+              </div>
+
+              <!-- Permanent Address Card -->
+              <div class="uni-location-card">
+                <i class="fa-solid fa-house-chimney uni-icon" style="color: var(--neon-emerald);"></i>
+                <div>
+                  <strong>Permanent Address</strong>
+                  <p>Police Line Siwan, Dist.- Siwan 841226 (Bihar), India</p>
+                </div>
+              </div>
+
+              <!-- University Details Card -->
+              <div class="uni-location-card" style="margin-top: 14px;">
+                <i class="fa-solid fa-graduation-cap uni-icon"></i>
+                <div>
+                  <strong>V.G.U Jaipur (Vivekananda Global University)</strong>
+                  <p>Sector 36, NRI Road, Jagatpura, Jaipur, Rajasthan 303012</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer class="cyber-footer">
+      <div class="container footer-content">
+        <p>© 2025–2026 Aditya Kumar. Built with <span class="footer-tech">Three.js 3D, Semantic HTML5 & Vanilla
+            CSS</span>.</p>
+        <p>3rd Year B.Tech Computer Science and Engineering • Vivekananda Global University</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Application Modules -->
+  <script src="js/data.js"></script>
+  <script src="js/three-scene.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
