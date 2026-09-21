@@ -223,11 +223,47 @@
 
 @keyframes avatarHoverFloat {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(0.4deg);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-10px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-4px) rotate(-0.4deg);
   }
 }
+
+@keyframes holoParticleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.6);
+  }
+  30% {
+    opacity: 0.85;
+  }
+  70% {
+    opacity: 0.6;
+    transform: translateY(-30px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(0.4);
+  }
+}
+
+@keyframes holoEmitterPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: perspective(300px) rotateX(45deg) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: perspective(300px) rotateX(45deg) scale(1.04);
+  }
+}
+
 
 

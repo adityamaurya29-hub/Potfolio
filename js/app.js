@@ -55,8 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // 13. Initialize Resume Download Handlers
   initResumeActions();
 
-  // 14. 3D Card Tilt Interaction
+  // 14. 3D Card Tilt & Holographic Avatar Interactions
   init3DTilt();
+  initHeroHologram();
 
   // 15. Scroll Spy & Reveal Observer
   initScrollAnimations();
@@ -740,7 +741,7 @@ function init3DTilt() {
   if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
 
   const tiltCards = document.querySelectorAll(
-    ".project-card, .skill-card-3d, .academic-card, .cert-card, .achievement-card, .resume-3d-card, .cutout-container"
+    ".project-card, .skill-card-3d, .academic-card, .cert-card, .achievement-card, .resume-3d-card"
   );
 
   tiltCards.forEach(card => {
@@ -761,6 +762,140 @@ function init3DTilt() {
     card.addEventListener("mouseleave", () => {
       card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
     });
+  });
+}
+
+/* ==========================================================================
+   14B. HERO HOLOGRAPHIC 3D CUT-OUT INTERACTION (60FPS LERP PARALLAX)
+   ========================================================================== */
+function initHeroHologram() {
+  const avatarWrapper = document.getElementById("hero-avatar-wrapper");
+  const cutoutContainer = document.getElementById("hero-avatar-frame");
+  const particlesContainer = document.getElementById("holo-particles-field");
+  const heroSection = document.getElementById("hero");
+
+  if (!avatarWrapper || !cutoutContainer) return;
+
+  // 1. Populate Floating Cyber Particles around Cut-Out
+  if (particlesContainer && particlesContainer.children.length === 0) {
+    const particleCount = 14;
+    for (let i = 0; i < particleCount; i++) {
+      const p = document.createElement("div");
+      p.className = "holo-particle";
+      const size = Math.random() * 3 + 2.5; // 2.5px - 5.5px
+      const left = Math.random() * 92 + 4; // 4% - 96%
+      const bottom = Math.random() * 70 + 5; // 5% - 75%
+      const duration = Math.random() * 2.5 + 3.5; // 3.5s - 6s
+      const delay = Math.random() * 3.5; // 0s - 3.5s
+      const isPurple = Math.random() > 0.55;
+
+      p.style.width = `${size.toFixed(1)}px`;
+      p.style.height = `${size.toFixed(1)}px`;
+      p.style.left = `${left.toFixed(1)}%`;
+      p.style.bottom = `${bottom.toFixed(1)}%`;
+      p.style.animationDuration = `${duration.toFixed(2)}s`;
+      p.style.animationDelay = `${delay.toFixed(2)}s`;
+
+      if (isPurple) {
+        p.style.background = "var(--neon-purple)";
+        p.style.boxShadow = "0 0 8px var(--neon-purple), 0 0 14px var(--neon-cyan)";
+      }
+
+      particlesContainer.appendChild(p);
+    }
+  }
+
+  // If reduced motion is requested or touch device without fine pointer, keep static
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
+
+  // 2. Smooth Lerp 3D Parallax & Cursor-Facing Tilt
+  let currentRotateX = 0;
+  let currentRotateY = 0;
+  let targetRotateX = 0;
+  let targetRotateY = 0;
+  let targetTranslateZ = 0;
+  let currentTranslateZ = 0;
+  let isHovered = false;
+  let isHeroHovered = false;
+  let animationFrameId = null;
+
+  const LERP_FACTOR = 0.08;
+
+  function updateHoloTransform() {
+    currentRotateX += (targetRotateX - currentRotateX) * LERP_FACTOR;
+    currentRotateY += (targetRotateY - currentRotateY) * LERP_FACTOR;
+    currentTranslateZ += (targetTranslateZ - currentTranslateZ) * LERP_FACTOR;
+
+    // Apply smooth 3D tilt to stage
+    cutoutContainer.style.transform = `perspective(1000px) rotateX(${currentRotateX.toFixed(3)}deg) rotateY(${currentRotateY.toFixed(3)}deg) translateZ(${currentTranslateZ.toFixed(2)}px)`;
+
+    // Keep loop active while there is noticeable motion or hover
+    const diff = Math.abs(targetRotateX - currentRotateX) + Math.abs(targetRotateY - currentRotateY) + Math.abs(targetTranslateZ - currentTranslateZ);
+    if (diff > 0.01 || isHovered || isHeroHovered) {
+      animationFrameId = requestAnimationFrame(updateHoloTransform);
+    } else {
+      animationFrameId = null;
+    }
+  }
+
+  function triggerUpdate() {
+    if (!animationFrameId) {
+      animationFrameId = requestAnimationFrame(updateHoloTransform);
+    }
+  }
+
+  // Track mouse across the hero visual container
+  const heroVisual = document.querySelector(".hero-visual") || heroSection;
+
+  if (heroVisual) {
+    heroVisual.addEventListener("mousemove", (e) => {
+      isHeroHovered = true;
+      const rect = cutoutContainer.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      // Calculate distance relative to photo center
+      const deltaX = (e.clientX - centerX) / (window.innerWidth * 0.4);
+      const deltaY = (e.clientY - centerY) / (window.innerHeight * 0.4);
+
+      // Clamp tilt for elegant subtlety (max ~10 degrees)
+      const clampedX = Math.max(-1, Math.min(1, deltaX));
+      const clampedY = Math.max(-1, Math.min(1, deltaY));
+
+      const tiltPower = isHovered ? 12 : 7.5;
+      targetRotateX = -clampedY * tiltPower;
+      targetRotateY = clampedX * tiltPower;
+
+      triggerUpdate();
+    });
+
+    heroVisual.addEventListener("mouseleave", () => {
+      isHeroHovered = false;
+      if (!isHovered) {
+        targetRotateX = 0;
+        targetRotateY = 0;
+        targetTranslateZ = 0;
+        triggerUpdate();
+      }
+    });
+  }
+
+  // Enhanced Depth & Aura on direct photo hover
+  avatarWrapper.addEventListener("mouseenter", () => {
+    isHovered = true;
+    targetTranslateZ = 14;
+    triggerUpdate();
+  });
+
+  avatarWrapper.addEventListener("mouseleave", () => {
+    isHovered = false;
+    targetTranslateZ = 0;
+    if (!isHeroHovered) {
+      targetRotateX = 0;
+      targetRotateY = 0;
+    }
+    triggerUpdate();
   });
 }
 

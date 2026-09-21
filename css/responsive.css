@@ -297,3 +297,37 @@
     display: none !important;
   }
 }
+
+/* Mobile & Touch Performance Optimization for Holographic Avatar */
+@media screen and (max-width: 768px), (hover: none) and (pointer: coarse) {
+  .avatar-wrapper {
+    animation: avatarHoverFloat 8s ease-in-out infinite;
+  }
+  .holo-particles-field .holo-particle:nth-child(n+7) {
+    display: none !important;
+  }
+}
+
+/* Accessibility: Respect Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .avatar-wrapper,
+  .holo-ring,
+  .avatar-glow-backdrop,
+  .cutout-container,
+  .cutout-image,
+  .laser-scanner,
+  .hud-badge,
+  .holo-particle,
+  .holo-pedestal-grid {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
