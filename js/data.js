@@ -298,12 +298,12 @@ const PORTFOLIO_DATA = {
       id: "python-coursera",
       title: "Crash Course on Python",
       issuer: "Google / Coursera",
-      date: "Verified Completion",
-      credentialId: "COURSERA-PY-882194",
+      date: "Jun 22, 2026",
+      credentialId: "DMZXA6E2LRYA",
       badgeIcon: "fa-brands fa-python",
       accent: "#00ff9d",
       skills: ["Python Fundamentals", "Data Structures", "OOP", "Automation Scripts"],
-      verifyLink: "https://coursera.org"
+      verifyLink: "https://coursera.org/verify/DMZXA6E2LRYA"
     },
     {
       id: "servicenow-fundamentals",

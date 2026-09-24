@@ -715,7 +715,7 @@ function initResumeActions() {
 
     <div class="section-title">Certifications</div>
     <ul>
-      <li><strong>Crash Course on Python</strong> – Google / Coursera</li>
+      <li><strong>Crash Course on Python</strong> – Google / Coursera (Credential ID: DMZXA6E2LRYA)</li>
       <li><strong>ServiceNow Administration Fundamentals On Demand</strong> – ServiceNow</li>
       <li><strong>ServiceNow Micro-Certification – Welcome to ServiceNow</strong></li>
       <li><strong>Modern Web Development Foundations</strong></li>
@@ -949,20 +949,53 @@ function initScrollAnimations() {
 function initMobileMenu() {
   const toggleBtn = document.getElementById("mobile-menu-btn");
   const menu = document.getElementById("nav-menu");
+  const backdrop = document.getElementById("nav-backdrop");
   const links = document.querySelectorAll(".nav-link");
 
   if (!toggleBtn || !menu) return;
 
+  function closeMenu() {
+    menu.classList.remove("open");
+    if (backdrop) backdrop.classList.remove("open");
+    document.body.classList.remove("nav-open");
+    toggleBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    toggleBtn.setAttribute("aria-expanded", "false");
+  }
+
+  function openMenu() {
+    menu.classList.add("open");
+    if (backdrop) backdrop.classList.add("open");
+    document.body.classList.add("nav-open");
+    toggleBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    toggleBtn.setAttribute("aria-expanded", "true");
+  }
+
   toggleBtn.addEventListener("click", () => {
-    menu.classList.toggle("open");
     const isOpen = menu.classList.contains("open");
-    toggleBtn.innerHTML = isOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+    if (window.CyberAudio) window.CyberAudio.playClick();
+  });
+
+  if (backdrop) {
+    backdrop.addEventListener("click", () => {
+      closeMenu();
+      if (window.CyberAudio) window.CyberAudio.playClick();
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menu.classList.contains("open")) {
+      closeMenu();
+    }
   });
 
   links.forEach(link => {
     link.addEventListener("click", () => {
-      menu.classList.remove("open");
-      toggleBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      closeMenu();
     });
   });
 }
