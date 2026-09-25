@@ -434,6 +434,15 @@ function renderCertifications(certs) {
 
         <h3 class="cert-title">${c.title}</h3>
 
+        ${c.image ? `
+          <div class="cert-preview-box" onclick="openCertModal('${c.title.replace(/'/g, "\\'")}', '${c.image}', '${c.verifyLink}', '${c.pdf || ''}', '${(c.issuer || '').replace(/'/g, "\\'")}')" title="Click to view full certificate">
+            <img src="${c.image}" alt="${c.title} Certificate" class="cert-preview-img" loading="lazy">
+            <div class="cert-preview-overlay">
+              <span class="cert-preview-btn"><i class="fa-solid fa-magnifying-glass-plus"></i> View Certificate</span>
+            </div>
+          </div>
+        ` : ''}
+
         <div class="cert-skills">
           ${c.skills.map(s => `<span class="cert-skill-tag">${s}</span>`).join("")}
         </div>
@@ -441,13 +450,94 @@ function renderCertifications(certs) {
 
       <div class="cert-footer">
         <span class="cert-id">${c.credentialId}</span>
-        <a href="${c.verifyLink}" target="_blank" rel="noopener noreferrer" class="cert-verify-link">
-          Verify <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </a>
+        <div class="cert-footer-links">
+          ${c.image ? `
+            <button type="button" class="cert-preview-link-btn" onclick="openCertModal('${c.title.replace(/'/g, "\\'")}', '${c.image}', '${c.verifyLink}', '${c.pdf || ''}', '${(c.issuer || '').replace(/'/g, "\\'")}')">
+              <i class="fa-solid fa-eye"></i> View
+            </button>
+          ` : ''}
+          <a href="${c.verifyLink}" target="_blank" rel="noopener noreferrer" class="cert-verify-link">
+            Verify <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
       </div>
     </div>
   `).join("");
 }
+
+// Global modal opener for certificate inspection
+window.openCertModal = function(title, imageSrc, verifyUrl, pdfUrl, issuer) {
+  const existing = document.getElementById("cert-modal-backdrop");
+  if (existing) existing.remove();
+
+  const issuerText = issuer || (title.toLowerCase().includes("servicenow") ? "ServiceNow" : "Google via Coursera");
+  let verifyText = "Verify Credential";
+  if (verifyUrl && verifyUrl.includes("coursera")) {
+    verifyText = "Verify on Coursera";
+  } else if (verifyUrl && verifyUrl.includes("servicenow")) {
+    verifyText = "Verify on ServiceNow";
+  }
+  const cleanTitle = title.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  const downloadFilename = `Aditya-Kumar-${cleanTitle}.pdf`;
+
+  const backdrop = document.createElement("div");
+  backdrop.id = "cert-modal-backdrop";
+  backdrop.className = "cyber-modal-backdrop";
+  backdrop.innerHTML = `
+    <div class="cyber-modal cert-modal-box">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title"><i class="fa-solid fa-award" style="color: var(--neon-emerald);"></i> ${title}</h3>
+          <p class="modal-subtitle">Official Verified Credential • Issued by ${issuerText}</p>
+        </div>
+        <div class="modal-header-actions">
+          <button class="modal-close-btn" id="cert-modal-close" aria-label="Close modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="cert-modal-img-wrap">
+        <img src="${imageSrc}" alt="${title}" class="cert-modal-img">
+      </div>
+
+      <div class="cert-modal-actions">
+        ${pdfUrl ? `
+          <a href="${pdfUrl}" download="${downloadFilename}" class="btn-secondary" style="padding: 10px 20px; font-size: 0.88rem;">
+            <i class="fa-solid fa-download"></i> Download PDF
+          </a>
+        ` : ''}
+        ${verifyUrl ? `
+          <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 10px 20px; font-size: 0.88rem;">
+            <span>${verifyText}</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        ` : ''}
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(backdrop);
+  document.body.classList.add("nav-open");
+
+  const closeBtn = backdrop.querySelector("#cert-modal-close");
+  const close = () => {
+    backdrop.remove();
+    document.body.classList.remove("nav-open");
+    document.removeEventListener("keydown", onKeyDown);
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Escape") close();
+  };
+
+  closeBtn.addEventListener("click", close);
+  backdrop.addEventListener("click", (e) => {
+    if (e.target === backdrop) close();
+  });
+  document.addEventListener("keydown", onKeyDown);
+  if (window.CyberAudio) window.CyberAudio.playClick();
+};
 
 /* ==========================================================================
    10. LEARNING JOURNEY ROADMAP
@@ -717,7 +807,7 @@ function initResumeActions() {
     <ul>
       <li><strong>Crash Course on Python</strong> – Google / Coursera (Credential ID: DMZXA6E2LRYA)</li>
       <li><strong>ServiceNow Administration Fundamentals On Demand</strong> – ServiceNow</li>
-      <li><strong>ServiceNow Micro-Certification – Welcome to ServiceNow</strong></li>
+      <li><strong>ServiceNow Micro-Certification – Welcome to ServiceNow</strong> – ServiceNow (Issued: Jun 14, 2026)</li>
       <li><strong>Modern Web Development Foundations</strong></li>
     </ul>
   </div>

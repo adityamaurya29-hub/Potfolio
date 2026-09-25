@@ -302,6 +302,8 @@ const PORTFOLIO_DATA = {
       credentialId: "DMZXA6E2LRYA",
       badgeIcon: "fa-brands fa-python",
       accent: "#00ff9d",
+      image: "assets/images/google-python-certificate.jpg",
+      pdf: "assets/images/google-python-certificate.pdf",
       skills: ["Python Fundamentals", "Data Structures", "OOP", "Automation Scripts"],
       verifyLink: "https://coursera.org/verify/DMZXA6E2LRYA"
     },
@@ -320,10 +322,12 @@ const PORTFOLIO_DATA = {
       id: "servicenow-micro",
       title: "ServiceNow Micro-Certification – Welcome to ServiceNow",
       issuer: "ServiceNow",
-      date: "Verified Credential",
+      date: "Jun 14, 2026",
       credentialId: "SN-MICRO-WEL-10294",
       badgeIcon: "fa-solid fa-award",
-      accent: "#a855f7",
+      accent: "#81b441",
+      image: "assets/images/servicenow-welcome-certificate.png",
+      pdf: "assets/images/servicenow-welcome-certificate.pdf",
       skills: ["Now Platform Basics", "Lists & Forms", "Service Catalog", "Knowledge Base"],
       verifyLink: "https://nowlearning.servicenow.com"
     },

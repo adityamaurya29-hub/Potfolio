@@ -746,6 +746,31 @@ body.nav-open {
     font-size: 0.85rem;
   }
 
+  /* Certifications Preview & Modal */
+  .cert-preview-box {
+    margin: 10px 0 14px;
+  }
+
+  .cert-modal-box {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .cert-modal-img {
+    max-height: 55vh;
+  }
+
+  .cert-modal-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .cert-modal-actions a {
+    width: 100%;
+    justify-content: center;
+  }
+
   /* Learning Journey Roadmap */
   .journey-item {
     padding-left: 45px;
